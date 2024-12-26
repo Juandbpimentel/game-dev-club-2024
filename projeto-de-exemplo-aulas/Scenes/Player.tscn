@@ -1,0 +1,142 @@
+[gd_scene load_steps=11 format=3 uid="uid://ds0aap77jbwp"]
+
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_f213v"]
+[ext_resource type="Texture2D" uid="uid://duy54qva7wd7i" path="res://Assets/player_sheet.png" id="2_p821i"]
+
+[sub_resource type="Animation" id="Animation_fnyfm"]
+resource_name = "Jumping_and_moving"
+
+[sub_resource type="Animation" id="Animation_3twbt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionPolygon2D:polygon")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [PackedVector2Array(0, -2, -2, -2, -5, -2, -5, -2, -5, 2, -7, 4, -7, 6, -5, 8, 5, 8, 7, 6, 7, 4, 4, 1, 4, -2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [9]
+}
+
+[sub_resource type="Animation" id="Animation_vbh82"]
+resource_name = "falling"
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_qqfla"]
+resource_name = "idle"
+length = 10.0
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4, 4.5, 4.75, 5, 5.25, 5.5, 6, 7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 2, 3, 2, 1, 0]
+}
+
+[sub_resource type="Animation" id="Animation_7mlwa"]
+resource_name = "jumping"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+
+[sub_resource type="Animation" id="Animation_gkpkl"]
+resource_name = "running"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionPolygon2D:polygon")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [PackedVector2Array(0, -2, -2, -3, -3, -4, -6, -4, -7, -3, -7, -1, -7, 0, -6, 1, -5, 2, -7, 4, -7, 6, -5, 8, 5, 8, 7, 6, 7, 4, 5, 2, 7, 0, 7, -2, 6, -3, 5, -4, 3, -4, 2, -3)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [10, 11]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sj3ed"]
+_data = {
+"Jumping_and_moving": SubResource("Animation_fnyfm"),
+"RESET": SubResource("Animation_3twbt"),
+"falling": SubResource("Animation_vbh82"),
+"idle": SubResource("Animation_qqfla"),
+"jumping": SubResource("Animation_7mlwa"),
+"running": SubResource("Animation_gkpkl")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_voql8"]
+size = Vector2(14, 12)
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+z_index = 1
+collision_mask = 15
+script = ExtResource("1_f213v")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("2_p821i")
+hframes = 9
+vframes = 4
+frame = 9
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_sj3ed")
+}
+
+[node name="CollisionPolygon2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+scale = Vector2(2, 2)
+shape = SubResource("RectangleShape2D_voql8")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+limit_left = 0
+limit_top = 0
+limit_right = 1152
+limit_bottom = 648

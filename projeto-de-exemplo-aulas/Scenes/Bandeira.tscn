@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8tcw2e0tuwub"]
+
+[ext_resource type="Script" path="res://Scripts/Bandeira.gd" id="1_1oq1g"]
+[ext_resource type="Texture2D" uid="uid://dutndquxwqg3o" path="res://Assets/bandeira.png" id="2_3gwwf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r6jtf"]
+size = Vector2(21, 42.5)
+
+[node name="Bandeira" type="Area2D"]
+collision_layer = 2
+script = ExtResource("1_1oq1g")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_3gwwf")
+hframes = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3.5, 11.25)
+shape = SubResource("RectangleShape2D_r6jtf")
+
+[node name="Label" type="Label" parent="."]
+visible = false
+offset_left = -87.0
+offset_top = -35.0
+offset_right = 94.0
+offset_bottom = -12.0
+text = "Você conseguiu vencer!"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
